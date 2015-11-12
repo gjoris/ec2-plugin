@@ -13,8 +13,8 @@ import string
 hasJava = os.system("java -version")
 
 if hasJava != 0:
-    os.system("sudo apt-get update")
-    os.system("sudo apt-get install openjdk-7-jre -y")
+    os.system("sudo yum update")
+    os.system("sudo yum install openjdk-7-jre -y")
 
 conn = httplib.HTTPConnection("169.254.169.254")
 conn.request("GET", "/latest/user-data")
@@ -24,13 +24,19 @@ userdata = response.read()
 args = string.split(userdata, "&")
 jenkinsUrl = ""
 slaveName = ""
+userName = ""
+userToken = ""
 
 for arg in args:
     if arg.split("=")[0] == "JENKINS_URL":
         jenkinsUrl = arg.split("=")[1]
     if arg.split("=")[0] == "SLAVE_NAME":
         slaveName = arg.split("=")[1]
+    if arg.split("=")[0] == "USER_NAME":
+        userName = arg.split("=")[1]
+    if arg.split("=")[0] == "USER_TOKEN":
+        userToken = arg.split("=")[1]
 		
 os.system("wget " + jenkinsUrl + "jnlpJars/slave.jar -O slave.jar")
-os.system("java -jar slave.jar -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
+os.system("java -jar slave.jar -noCertificateCheck -jnlpCredentials " + userName + ":" + userToken + " -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
 
