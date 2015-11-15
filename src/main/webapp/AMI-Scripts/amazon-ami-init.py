@@ -24,19 +24,13 @@ userdata = response.read()
 args = string.split(userdata, "&")
 jenkinsUrl = ""
 slaveName = ""
-userName = ""
-userToken = ""
 
 for arg in args:
     if arg.split("=")[0] == "JENKINS_URL":
         jenkinsUrl = arg.split("=")[1]
     if arg.split("=")[0] == "SLAVE_NAME":
         slaveName = arg.split("=")[1]
-    if arg.split("=")[0] == "USER_NAME":
-        userName = arg.split("=")[1]
-    if arg.split("=")[0] == "USER_TOKEN":
-        userToken = arg.split("=")[1]
 		
 os.system("wget " + jenkinsUrl + "jnlpJars/slave.jar -O slave.jar")
-os.system("java -jar slave.jar -noCertificateCheck -jnlpCredentials " + userName + ":" + userToken + " -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
+os.system("java -jar slave.jar -noCertificateCheck -jnlpCredentials " + os.environ.get('USER_NAME') + ":" + os.environ.get('USER_TOKEN') + " -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
 
