@@ -32,6 +32,6 @@ for arg in args:
     if arg.split("=")[0] == "SLAVE_NAME":
         slaveName = arg.split("=")[1]
 		
-os.system("wget " + jenkinsUrl + "jnlpJars/slave.jar -O slave.jar")
+os.system("wget --no-check-certificate " + jenkinsUrl + "jnlpJars/slave.jar -O slave.jar")
 os.system("java -jar slave.jar -noCertificateCheck -jnlpCredentials " + sys.argv[1] + ":" + sys.argv[2] + " -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
 
