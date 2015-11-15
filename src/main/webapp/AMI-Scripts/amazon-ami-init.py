@@ -32,5 +32,5 @@ for arg in args:
         slaveName = arg.split("=")[1]
 		
 os.system("wget " + jenkinsUrl + "jnlpJars/slave.jar -O slave.jar")
-os.system("java -jar slave.jar -noCertificateCheck -jnlpCredentials " + os.environ.get('USER_NAME') + ":" + os.environ.get('USER_TOKEN') + " -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
+os.system("java -jar slave.jar -noCertificateCheck -jnlpCredentials " + sys.argv[1] + ":" + sys.argv[2] + " -jnlpUrl " + jenkinsUrl + "computer/" + slaveName + "/slave-agent.jnlp")
 
