@@ -2,6 +2,7 @@
 import os
 import httplib
 import string
+import sys
 
 # To install run:
 # sudo wget http://$JENKINS_URL/plugin/ec2/AMI-Scripts/ubuntu-init.py -O /usr/bin/userdata
