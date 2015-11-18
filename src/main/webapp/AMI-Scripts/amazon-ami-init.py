@@ -14,8 +14,8 @@ import sys
 hasJava = os.system("java -version")
 
 if hasJava != 0:
-    os.system("sudo yum update")
-    os.system("sudo yum install openjdk-7-jre -y")
+    os.system("sudo apt-get update")
+    os.system("sudo apt-get install openjdk-7-jre -y")
 
 conn = httplib.HTTPConnection("169.254.169.254")
 conn.request("GET", "/latest/user-data")
